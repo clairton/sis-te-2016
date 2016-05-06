@@ -1,5 +1,6 @@
 package br.edu.horus.cc;
 
+import java.util.Collection;
 import java.util.Scanner;
 
 public class ContaCorrente {
@@ -18,6 +19,7 @@ public class ContaCorrente {
 			System.out.println("2 - para fazer um depósito");
 			System.out.println("3 - para saque");
 			System.out.println("4 - para transferencia");
+			System.out.println("5 - para extrato");
 			opcao = leitor.nextInt();
 			if(opcao == 1){
 				System.out.println("Informa o numero da conta");
@@ -61,6 +63,13 @@ public class ContaCorrente {
 					System.err.println("Saldo insuficiente para sacar");
 				} catch(ContaNaoExisteException e){
 					System.err.println("Uma das Contas não existe");
+				}
+			} else if(opcao == 5){
+				System.out.println("Informa o numero da conta para mostrar extrato");
+				String numero = leitor.next();
+				Collection<Movimento> movimentos = repositorio.extrato(numero);
+				for (Movimento movimento : movimentos) {
+					System.err.println(movimento.getCriadoEm() + " " + movimento.getValor());
 				}
 			}
 		}while(opcao != 0);

@@ -17,6 +17,7 @@ CREATE TABLE movimentos(
 		(START WITH 1, INCREMENT BY 1) PRIMARY KEY,
 	valor NUMERIC(10, 2) NOT NULL,
 	conta_id INTEGER NOT NULL,
+	criado_em datetime NOT NULL,
 	CONSTRAINT conta_do_movimento FOREIGN KEY (conta_id) REFERENCES contas (id)
 );
 

@@ -5,6 +5,9 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Date;
 
 public class Repositorio {
 	private Connection conexao;
@@ -37,6 +40,7 @@ public class Repositorio {
 			PreparedStatement statement = conexao.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
 			statement.setDouble(1, movimento.getValor());
 			statement.setInt(2, movimento.getConta().getId());
+			statement.setDate(3, new java.sql.Date(movimento.getCriadoEm().getTime()));
 			statement.executeUpdate();
 			
 			//recupera o id de conta gerado pelo banco
@@ -67,7 +71,29 @@ public class Repositorio {
 			throw new RuntimeException(e);
 		}
 	}
-
+	
+	
+	
+	public Collection<Movimento> extrato(String numero){
+		String sql = "SELECT movimentos.* FROM movimentos "
+				+ "INNER JOIN contas on movimentos.conta_id= contas.id WHERE numero = ?";
+		try{
+			PreparedStatement statement = conexao.prepareStatement(sql);
+			statement.setString(1, numero);
+			ResultSet result = statement.executeQuery();
+			Collection<Movimento> movimentos = new ArrayList<>();
+			while(result.next()){
+				Double valor = result.getDouble("valor");
+				Date criadoEm = result.getDate("criado_em");
+				Movimento movimento = new Movimento(valor, criadoEm);
+				movimentos.add(movimento);
+			}
+			return movimentos;
+		}catch(SQLException e){
+			throw new RuntimeException(e);
+		}
+		
+	}
 }
 
 
