@@ -1,5 +1,3 @@
-package br.edu.horus.cc;
-
 import java.util.Scanner;
 
 public class Forca {
