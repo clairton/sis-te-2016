@@ -68,8 +68,9 @@ public class ContaCorrente {
 				System.out.println("Informa o numero da conta para mostrar extrato");
 				String numero = leitor.next();
 				Collection<Movimento> movimentos = repositorio.extrato(numero);
+				System.out.println("Data Movimento # Valor");
 				for (Movimento movimento : movimentos) {
-					System.err.println(movimento.getCriadoEm() + " " + movimento.getValor());
+					System.out.println(movimento.getCriadoEm() + " # " + movimento.getValor());
 				}
 			}
 		}while(opcao != 0);

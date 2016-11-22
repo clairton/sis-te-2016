@@ -35,7 +35,7 @@ public class Repositorio {
 	}
 
 	public void salvar(Movimento movimento) {
-		String sql = "INSERT INTO movimentos (valor, conta_id) VALUES (?, ?)";
+		String sql = "INSERT INTO movimentos (valor, conta_id, criado_em) VALUES (?, ?, ?)";
 		try{
 			PreparedStatement statement = conexao.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
 			statement.setDouble(1, movimento.getValor());
